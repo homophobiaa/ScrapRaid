@@ -5,7 +5,7 @@ you have planted and it instantly shows the total crop value, the raid level it
 triggers, how far you are from the next level, the player-adjusted raid budget, and
 **how many of each bot to expect** — including Farmbots.
 
-Everything runs in the browser. No backend, no database, no runtime network requests.
+Everything runs in the browser.
 
 ## Features
 
@@ -20,43 +20,6 @@ Everything runs in the browser. No backend, no database, no runtime network requ
 - Raid budget scaled for 1, 2 or 3+ players.
 - Farm and player count persist in `localStorage`.
 - Keyboard accessible, screen-reader labelled, and respects `prefers-reduced-motion`.
-
-## Quick start
-
-Requires Node.js 20.19+ or 22.12+.
-
-```bash
-npm install
-npm run dev       # http://localhost:5173
-```
-
-## Build
-
-```bash
-npm run build     # type-checks, then emits a static site to dist/
-npm run preview   # serve the production build locally
-```
-
-Other scripts:
-
-```bash
-npm test          # vitest — raid maths and composition solver
-npm run typecheck # tsc only
-npm run lint      # oxlint
-```
-
-## Deployment
-
-`dist/` is a plain static bundle with no server-side requirements. `vite.config.ts`
-sets `base: './'`, so the same build works from a domain root or from a subpath.
-
-| Host | Setup |
-| --- | --- |
-| **Vercel** | Import the repo. Framework preset **Vite**; build `npm run build`; output `dist`. |
-| **Netlify** | Import the repo. Build `npm run build`; publish directory `dist`. |
-| **GitHub Pages** | Push to `main`. The included workflow at `.github/workflows/deploy.yml` builds and publishes automatically once Pages is set to **GitHub Actions** under Settings → Pages. |
-
-Any other static host works too — upload the contents of `dist/`.
 
 ## How the numbers work
 
