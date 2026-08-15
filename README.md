@@ -2,8 +2,8 @@
 
 A frontend-only calculator for Scrap Mechanic Survival. Enter how many of each crop
 you have planted and it instantly shows the total crop value, the raid level it
-triggers, how far you are from the next level, which bots can spawn, and the
-player-adjusted raid budget.
+triggers, how far you are from the next level, the player-adjusted raid budget, and
+**how many of each bot to expect** — including Farmbots.
 
 Everything runs in the browser. No backend, no database, no runtime network requests.
 
@@ -13,8 +13,10 @@ Everything runs in the browser. No backend, no database, no runtime network requ
 - All 12 farmable crops with their real in-game icons, raid values and harvest yields.
 - Raid levels from **NO RAID** through **SUPER RAID 07**, with the exact points
   remaining until the next level.
-- Bot pool for the current level, with the units newly unlocked at that level
-  highlighted, using real in-game bot renders.
+- Expected raid composition: average count and central 80% range for every bot,
+  solved exactly from the spawn tables rather than sampled.
+- Dedicated Farmbot forecast — expected count, typical range, guaranteed opening
+  Farmbots and the probability of getting more.
 - Raid budget scaled for 1, 2 or 3+ players.
 - Farm and player count persist in `localStorage`.
 - Keyboard accessible, screen-reader labelled, and respects `prefers-reduced-motion`.
@@ -38,6 +40,7 @@ npm run preview   # serve the production build locally
 Other scripts:
 
 ```bash
+npm test          # vitest — raid maths and composition solver
 npm run typecheck # tsc only
 npm run lint      # oxlint
 ```
@@ -94,20 +97,59 @@ above 100,000 still display their real value, but difficulty stops scaling.
 spends the budget on weighted random bot groups, so the exact composition of any given
 raid varies. The result panel says so directly.
 
+## How the bot counts are estimated
+
+Spawn tables live in [`src/data/raidGroups.ts`](src/data/raidGroups.ts); the solver is
+[`src/lib/composition.ts`](src/lib/composition.ts).
+
+A raid is built in two stages. First an **initial group** spawns for free and does not
+touch the budget (levels 5–6 open with one Farmbot, level 7 with three; level 4 rolls
+one of three possible openings). Then the budget is spent in a loop: every group the
+remaining budget can still afford enters a weighted draw, the winner is added, its cost
+is subtracted, and the loop repeats until nothing is affordable.
+
+That makes the honest answer a distribution, so the app solves one rather than guessing
+or simulating. Two deterministic dynamic programmes run over integer budgets:
+
+- **Expected counts**, for every bot at once —
+  `E[b | B] = Σ P(g) · (count_g[b] + E[b | B − cost_g])`, with `P(g)` renormalised
+  across only the groups still affordable at `B`.
+- **Exact count distributions**, per bot —
+  `dist[B][k] = Σ P(g) · dist[B − cost_g][k − count_g]`, convolved at the end with the
+  opening group. The 10th and 90th percentiles come straight off that distribution, as
+  does the probability of at least one Farmbot beyond the guaranteed ones.
+
+There is no sampling anywhere, so the same farm always produces byte-identical numbers
+and React re-renders never move them. Results are memoised by (level, floored budget).
+Displayed averages are rounded to one decimal; nothing internal is rounded.
+
+The distribution pass is bounded by a deterministic cell budget rather than a wall-clock
+cutoff, so behaviour cannot vary between machines. That limit covers every budget the
+game can actually reach (6,000, at the difficulty cap with 3+ players); above it the
+solver would keep exact Farmbot percentiles and fall back to expected values elsewhere.
+
+Verified in [`src/lib/composition.test.ts`](src/lib/composition.test.ts), which
+cross-checks the solver against an independent Monte Carlo simulation of the same
+process at five representative budgets.
+
 ## Project structure
 
 ```
 public/assets/crops/   12 crop icons (webp)
 public/assets/bots/     9 bot renders (webp, transparent)
 src/assets/fonts/       self-hosted woff2 subsets
-src/data/               crops, bots, raid tiers, budgets — the single source of truth
-src/lib/                pure calculation, formatting and storage helpers
+src/data/               crops, bots, raid tiers, budgets, spawn tables — the single
+                        source of truth
+src/lib/                pure calculation, composition solver, formatting, storage
 src/hooks/              farm state, reduced motion, tier escalation, viewport helpers
 src/components/         UI, one CSS Module per component
 src/styles/             design tokens, fonts, global reset and industrial primitives
 ```
 
 ## Assets and attribution
+
+Raid spawn tables and group weights follow this
+[raid system breakdown](https://steamcommunity.com/sharedfiles/filedetails/?id=3773250375).
 
 Crop icons and bot renders were taken from the
 [Official Scrap Mechanic Wiki](https://scrapmechanic.fandom.com/wiki/Farming) (Fandom,

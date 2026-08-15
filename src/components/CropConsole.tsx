@@ -41,8 +41,8 @@ export function CropConsole({
 
   return (
     <section className={`plate ${styles.console}`} aria-labelledby="crop-console-title">
-      <Bolt className={styles.boltTL} />
       <Bolt className={styles.boltTR} />
+      <Bolt className={styles.boltBL} />
 
       <div className={styles.head}>
         <div className={styles.headText}>

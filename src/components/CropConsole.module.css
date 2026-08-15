@@ -2,14 +2,15 @@
   padding: 0.85rem 0.85rem 1rem;
 }
 
-.boltTL {
-  left: 8px;
-  top: 8px;
+/* Bolts sit on the two square corners; the other two are cut away. */
+.boltTR {
+  right: 9px;
+  top: 9px;
 }
 
-.boltTR {
-  right: 8px;
-  top: 8px;
+.boltBL {
+  left: 9px;
+  bottom: 9px;
 }
 
 .head {
@@ -143,23 +144,34 @@
   font-weight: 600;
 }
 
-@media (max-width: 620px) {
+@media (max-width: 999px) {
   .console {
-    padding: 0.75rem 0.6rem 0.9rem;
+    padding: 0.55rem 0.45rem 0.6rem;
   }
 
   .head {
-    padding-left: 0.9rem;
-    padding-right: 0.9rem;
+    padding: 0.1rem 0.45rem 0.55rem;
     align-items: center;
   }
 
   .seam {
-    margin-inline: -0.6rem;
+    margin-inline: -0.45rem;
+    margin-bottom: 0.55rem;
   }
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .footnote {
+    margin-top: 0.6rem;
+    padding-inline: 0.2rem;
+    font-size: 0.74rem;
+  }
+
+  .subtitle {
+    font-size: 0.78rem;
   }
 }
 

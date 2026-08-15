@@ -18,6 +18,10 @@ export function TierGauge({ result }: { result: RaidResult }) {
         <span className={`tabular ${styles.percent}`}>{percent}%</span>
       </header>
 
+      <div className={styles.rail} aria-hidden="true">
+        <span className={styles.pointer} style={{ '--fraction': fraction } as React.CSSProperties} />
+      </div>
+
       <div
         className={`inset ${styles.track}`}
         role="progressbar"

@@ -30,13 +30,15 @@ export default function App() {
       <AppHeader />
 
       <main className={styles.console}>
-        <CropConsole
-          contributions={result.contributions}
-          isEmpty={farm.isEmpty}
-          onSet={farm.setQuantity}
-          onAdjust={farm.adjustQuantity}
-          onClear={farm.clearFarm}
-        />
+        <div className={styles.cropColumn}>
+          <CropConsole
+            contributions={result.contributions}
+            isEmpty={farm.isEmpty}
+            onSet={farm.setQuantity}
+            onAdjust={farm.adjustQuantity}
+            onClear={farm.clearFarm}
+          />
+        </div>
 
         <div className={styles.resultColumn}>
           <ResultPanel

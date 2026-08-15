@@ -21,14 +21,28 @@
   }
 }
 
-.boltTL {
-  left: 8px;
-  top: 8px;
+/* Bolts sit on the two square corners; the other two are cut away. */
+.boltTR {
+  right: 9px;
+  top: 9px;
 }
 
-.boltTR {
-  right: 8px;
-  top: 8px;
+.boltBL {
+  left: 9px;
+  bottom: 9px;
+}
+
+/* Hazard tape across the top of the panel once the raid turns serious. */
+.panel[data-level='6']::before,
+.panel[data-level='7']::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--notch);
+  right: 0;
+  height: 4px;
+  background-image: var(--hazard);
+  opacity: 0.85;
 }
 
 .head {
@@ -76,17 +90,21 @@
   gap: 0.85rem;
 }
 
-@media (max-width: 620px) {
+@media (max-width: 999px) {
   .panel {
-    padding: 0.75rem 0.6rem 0.9rem;
+    padding: 0.55rem 0.45rem 0.7rem;
   }
 
   .head {
-    padding-left: 0.9rem;
-    padding-right: 0.9rem;
+    padding: 0.1rem 0.45rem 0.55rem;
   }
 
   .seam {
-    margin-inline: -0.6rem;
+    margin-inline: -0.45rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .body {
+    gap: 0.65rem;
   }
 }

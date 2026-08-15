@@ -34,6 +34,8 @@ export interface RaidResult {
   readonly newBots: readonly Bot[];
   /** Player-adjusted raid budget, or `null` when there is no raid. */
   readonly budget: number | null;
+  /** Same budget before rounding — the composition solver spends the floor of this. */
+  readonly rawBudget: number | null;
   /** Per-crop breakdown, ordered like the crop table. */
   readonly contributions: readonly CropContribution[];
 }
@@ -74,15 +76,25 @@ export function tierFraction(totalValue: number, tier: RaidTier): number {
 }
 
 /**
- * Raid budget for the current tier and player count.
+ * Raid budget for the current tier and player count, unrounded.
  *
  * fraction × (maximumBudget − minimumBudget) + minimumBudget × playerModifier
  */
-export function raidBudget(totalValue: number, tier: RaidTier, players: PlayerCount): number | null {
+export function rawRaidBudget(
+  totalValue: number,
+  tier: RaidTier,
+  players: PlayerCount,
+): number | null {
   if (!tier.budget) return null;
   const fraction = tierFraction(totalValue, tier);
   const { min, max } = tier.budget;
-  return Math.round(fraction * (max - min) + min * playerModifier(players));
+  return fraction * (max - min) + min * playerModifier(players);
+}
+
+/** Raid budget rounded for display. */
+export function raidBudget(totalValue: number, tier: RaidTier, players: PlayerCount): number | null {
+  const raw = rawRaidBudget(totalValue, tier, players);
+  return raw === null ? null : Math.round(raw);
 }
 
 /** Every bot available at or below `level`, in unlock order. */
@@ -126,6 +138,7 @@ export function calculateRaid(quantities: FarmQuantities, players: PlayerCount):
     pool: botPoolForLevel(tier.level),
     newBots: tier.unlocks.map((id) => BOTS[id]),
     budget: raidBudget(totalValue, tier, players),
+    rawBudget: rawRaidBudget(totalValue, tier, players),
     contributions,
   };
 }

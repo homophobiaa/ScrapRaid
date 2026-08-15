@@ -15,10 +15,10 @@
   --steel-500: #4e555e;
   --steel-400: #6b737d;
 
-  /* Stencilled print */
-  --text: #ece3d5;
-  --text-2: #b3aa9c;
-  --text-3: #7e776d;
+  /* Stencilled print — warm ivory, never sterile white */
+  --text: #f0e5d1;
+  --text-2: #b8ad9b;
+  --text-3: #837b6e;
 
   /* Accents */
   --orange: #ff7d1f;
@@ -40,6 +40,27 @@
   --font-display: 'Archivo Black', 'Arial Black', 'Helvetica Neue', sans-serif;
   --font-label: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   --font-body: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fabrication */
+  --notch: 14px;
+  --cut-edge: #59626d;
+  --hazard: repeating-linear-gradient(-45deg, var(--yellow) 0 8px, #17170f 8px 16px);
+  /* One diagonal cut line, drawn into a notch-sized corner box. */
+  --cut-line: linear-gradient(
+    to top right,
+    transparent calc(50% - 0.9px),
+    var(--cut-edge) calc(50% - 0.9px),
+    var(--cut-edge) calc(50% + 0.9px),
+    transparent calc(50% + 0.9px)
+  );
+  --plate-clip: polygon(
+    var(--notch) 0,
+    100% 0,
+    100% calc(100% - var(--notch)),
+    calc(100% - var(--notch)) 100%,
+    0 100%,
+    0 var(--notch)
+  );
 
   /* Rhythm */
   --gap-1: 0.25rem;

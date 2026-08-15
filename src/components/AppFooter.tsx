@@ -21,6 +21,16 @@ export function AppFooter() {
             Official Scrap Mechanic Wiki
           </a>
         </p>
+        <p className={styles.line}>
+          Raid mechanics:{' '}
+          <a
+            href="https://steamcommunity.com/sharedfiles/filedetails/?id=3773250375"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Raid system breakdown
+          </a>
+        </p>
         <p className={styles.disclaimer}>
           Unofficial fan-made tool. Not affiliated with Axolot Games.
         </p>

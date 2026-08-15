@@ -20,9 +20,29 @@
 
 .track {
   position: relative;
-  height: 16px;
+  height: 18px;
   padding: 3px;
   overflow: hidden;
+}
+
+/*
+ * Travelling pointer on its own rail above the gauge, so the track can keep
+ * clipping its fill without cutting the marker in half.
+ */
+.rail {
+  position: relative;
+  height: 7px;
+}
+
+.pointer {
+  position: absolute;
+  bottom: 0;
+  left: calc(var(--fraction, 0) * (100% - 9px));
+  width: 9px;
+  height: 6px;
+  background: var(--tier-accent);
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+  transition: left 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .fill {
@@ -53,15 +73,21 @@
   );
 }
 
+/* Machined scale: full-height majors every quarter, short minors every 5%. */
 .ticks {
   position: absolute;
   inset: 3px;
   pointer-events: none;
-  background-image: repeating-linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.55) 0 1px,
-    rgba(0, 0, 0, 0) 1px 10%
-  );
+  background-image:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0 1px, rgba(0, 0, 0, 0) 1px 25%),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.45) 0 1px, rgba(0, 0, 0, 0) 1px 5%);
+  background-size:
+    100% 100%,
+    100% 45%;
+  background-position:
+    0 0,
+    0 100%;
+  background-repeat: repeat-x;
 }
 
 .scale {

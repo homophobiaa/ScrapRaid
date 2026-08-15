@@ -1,6 +1,7 @@
-import type { RefObject } from 'react';
+import { useMemo, type RefObject } from 'react';
 import type { PlayerCount } from '../data/raid';
 import type { RaidResult } from '../lib/raidCalc';
+import { calculateComposition } from '../lib/composition';
 import { useTierEscalation } from '../hooks/useTierChange';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { RaidReadout } from './RaidReadout';
@@ -29,6 +30,13 @@ export function ResultPanel({
   const escalating = useTierEscalation(result.tier.level, !reducedMotion);
   const { tier } = result;
 
+  // Solved deterministically and memoised per (level, floored budget), so the
+  // figures never shift on an unrelated re-render.
+  const composition = useMemo(
+    () => calculateComposition(tier.level, result.rawBudget),
+    [tier.level, result.rawBudget],
+  );
+
   const summary =
     tier.level > 0
       ? tier.summary
@@ -43,8 +51,8 @@ export function ResultPanel({
       data-escalating={escalating || undefined}
       aria-labelledby="result-panel-title"
     >
-      <Bolt className={styles.boltTL} />
       <Bolt className={styles.boltTR} />
+      <Bolt className={styles.boltBL} />
 
       <header className={styles.head}>
         <h2 className={styles.title} id="result-panel-title">
@@ -80,7 +88,7 @@ export function ResultPanel({
           onPlayersChange={onPlayersChange}
         />
 
-        <BotLineup pool={result.pool} newBots={result.newBots} />
+        <BotLineup pool={result.pool} newBots={result.newBots} composition={composition} />
       </div>
     </aside>
   );
