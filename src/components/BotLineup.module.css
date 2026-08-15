@@ -1,0 +1,184 @@
+.section {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-2);
+}
+
+.count {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(94px, 1fr));
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ---- bot card ---- */
+
+.card {
+  position: relative;
+  display: grid;
+  gap: 0.18rem;
+  padding: 0.4rem 0.35rem 0.45rem;
+  text-align: center;
+  border: 1px solid var(--steel-700);
+  border-radius: 2px;
+  background-image: linear-gradient(180deg, var(--steel-800), var(--steel-850));
+  box-shadow: inset 0 1px 0 var(--edge-hi);
+  animation: botIn 340ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i) * 45ms);
+}
+
+@keyframes botIn {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+}
+
+.card[data-new] {
+  border-color: color-mix(in srgb, var(--tier-accent) 60%, var(--steel-700));
+  background-image:
+    linear-gradient(180deg, var(--tier-accent-dim), transparent 55%),
+    linear-gradient(180deg, var(--steel-800), var(--steel-850));
+  box-shadow:
+    inset 0 1px 0 var(--edge-hi-strong),
+    0 0 0 1px color-mix(in srgb, var(--tier-accent) 22%, transparent);
+}
+
+.viewport {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  padding: 4px;
+  background-image:
+    radial-gradient(80% 70% at 50% 32%, rgba(255, 255, 255, 0.055), transparent 70%),
+    linear-gradient(180deg, var(--steel-1000), #0d0f11);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.65));
+  /* Very slight idle drift — no rotation, scaling or bounce. */
+  animation: idleDrift 7s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -900ms);
+}
+
+@keyframes idleDrift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.5px);
+  }
+}
+
+.fallback {
+  display: grid;
+  gap: 0.15rem;
+  place-items: center;
+  padding: 0.4rem;
+}
+
+.fallbackCode {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  color: var(--tier-accent);
+}
+
+.fallbackFamily {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.name {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  color: var(--text);
+  margin-top: 0.2rem;
+  /* Keeps every card the same height whether the name wraps or not. */
+  min-height: 1.8em;
+}
+
+.note {
+  font-size: 0.68rem;
+  line-height: 1.2;
+  color: var(--text-3);
+}
+
+.newTag {
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  padding: 0.1rem 0.34rem;
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #12130f;
+  background: var(--tier-accent);
+  border-radius: 1px;
+  box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.85);
+}
+
+/* ---- supporting copy ---- */
+
+.none {
+  padding: 0.7rem 0.75rem;
+  font-size: 0.82rem;
+  color: var(--text-3);
+}
+
+.poolNote {
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--text-3);
+}
+
+.disclaimer {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--text-2);
+  border-left: 3px solid var(--yellow);
+  background: rgba(224, 178, 58, 0.07);
+}
+
+.disclaimerMark {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 0.12rem;
+  background: var(--yellow);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}

@@ -1,0 +1,122 @@
+.section {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.players {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-3);
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.legend {
+  float: left;
+  padding: 0;
+}
+
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 3px;
+  padding: 3px;
+  min-width: 168px;
+}
+
+.segment {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.face {
+  display: grid;
+  place-items: center;
+  height: 32px;
+  padding: 0 0.7rem;
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  border-radius: 1px;
+  background-image: linear-gradient(180deg, var(--steel-750), var(--steel-800));
+  box-shadow: inset 0 1px 0 var(--edge-hi);
+  transition:
+    color 120ms ease,
+    background-color 120ms ease;
+}
+
+.segment:hover .face {
+  color: var(--text);
+}
+
+.segment[data-selected] .face {
+  color: #12130f;
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--orange) 88%, white),
+    var(--orange-deep)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 12px rgba(255, 125, 31, 0.22);
+}
+
+.segment input:focus-visible + .face {
+  outline: 2px solid var(--orange-bright);
+  outline-offset: -2px;
+}
+
+/* ---- budget readout ---- */
+
+.budget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-3);
+  padding: 0.5rem 0.75rem 0.55rem;
+}
+
+.budgetMeta {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.modifier {
+  font-size: 0.74rem;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.budgetValue {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 4.4vw, 1.6rem);
+  line-height: 1;
+  color: var(--tier-accent);
+  text-shadow: 0 0 22px var(--tier-accent-dim);
+  white-space: nowrap;
+}
+
+.budgetNone {
+  color: var(--text-3);
+  text-shadow: none;
+}
+
+@media (max-width: 380px) {
+  .players {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+  }
+
+  .segmented {
+    min-width: 0;
+  }
+}

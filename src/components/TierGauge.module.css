@@ -1,0 +1,112 @@
+.gauge {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-2);
+}
+
+.percent {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.86rem;
+  letter-spacing: 0.06em;
+  color: var(--tier-accent);
+}
+
+.track {
+  position: relative;
+  height: 16px;
+  padding: 3px;
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(var(--fraction, 0));
+  border-radius: 1px;
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--tier-accent) 88%, white),
+    var(--tier-accent) 45%,
+    color-mix(in srgb, var(--tier-accent) 72%, black)
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 0 12px var(--tier-accent-dim);
+  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hazard fill once the farm is at maximum pressure. */
+.gauge[data-capped] .fill {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--red-bright) 0 8px,
+    #2a1410 8px 16px
+  );
+}
+
+.ticks {
+  position: absolute;
+  inset: 3px;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.55) 0 1px,
+    rgba(0, 0, 0, 0) 1px 10%
+  );
+}
+
+.scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+}
+
+.remaining {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 0.1rem;
+}
+
+.remaining strong {
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  line-height: 1;
+  color: var(--text);
+  font-weight: 400;
+}
+
+.remainingUnit {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.capNote {
+  margin-top: 0.1rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--text-3);
+}
+
+.capNote strong {
+  color: var(--text-2);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}

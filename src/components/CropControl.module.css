@@ -1,0 +1,304 @@
+.row {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.65rem 0.7rem 0.7rem;
+  border: 1px solid var(--steel-700);
+  border-radius: var(--radius);
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0) 42%),
+    linear-gradient(180deg, var(--steel-800), var(--steel-850));
+  box-shadow:
+    inset 0 1px 0 var(--edge-hi),
+    inset 0 -1px 0 var(--edge-lo);
+  transition:
+    border-color 140ms ease,
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+
+/* Painted status stripe down the left edge. */
+.row::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  bottom: -1px;
+  width: 3px;
+  border-radius: var(--radius) 0 0 var(--radius);
+  background: var(--steel-600);
+  transition: background-color 160ms ease;
+}
+
+.row:hover {
+  border-color: var(--steel-600);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 var(--edge-hi-strong),
+    inset 0 -1px 0 var(--edge-lo),
+    0 6px 14px -10px rgba(0, 0, 0, 0.9);
+}
+
+.row:focus-within {
+  border-color: var(--steel-500);
+}
+
+.row[data-active]::before {
+  background: var(--orange);
+  box-shadow: 0 0 10px rgba(255, 125, 31, 0.45);
+}
+
+.row[data-inert][data-active]::before {
+  background: var(--olive);
+  box-shadow: none;
+}
+
+/* ---- icon socket ---- */
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.bottom {
+  display: flex;
+  align-items: stretch;
+  gap: 0.6rem;
+}
+
+.socket {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 4px;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.7));
+}
+
+.row[data-inert] .icon {
+  filter: saturate(0.55) brightness(0.82) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.7));
+}
+
+.iconFallback {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  text-decoration: none;
+  border: 1px dashed var(--steel-600);
+  border-radius: 2px;
+  padding: 0.2rem 0.3rem;
+}
+
+/* ---- name and stats ---- */
+
+.meta {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.name {
+  display: block;
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1.1;
+  cursor: pointer;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 0.42rem;
+  margin-top: 0.12rem;
+  font-size: 0.78rem;
+  line-height: 1.25;
+  color: var(--text-3);
+}
+
+.rate {
+  color: var(--text-2);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.inertTag {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--olive);
+}
+
+.divider {
+  width: 1px;
+  height: 9px;
+  background: var(--steel-600);
+}
+
+.harvest {
+  white-space: nowrap;
+}
+
+/* ---- contribution readout ---- */
+
+.contribution {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 4.6rem;
+  line-height: 1.05;
+}
+
+.contributionValue {
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 1.06rem;
+  color: var(--text-3);
+  transition: color 160ms ease;
+}
+
+.row[data-active] .contributionValue {
+  color: var(--orange-bright);
+}
+
+.row[data-inert] .contributionValue {
+  color: var(--text-3);
+}
+
+.contributionLabel {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+/* ---- stepper ---- */
+
+.stepper {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 46px;
+  align-items: stretch;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.62);
+  border-radius: 2px;
+  background-image: linear-gradient(180deg, var(--steel-1000), var(--steel-900));
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.8),
+    0 1px 0 var(--edge-hi);
+  overflow: hidden;
+}
+
+.step {
+  display: grid;
+  place-items: center;
+  color: var(--text-2);
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(180deg, var(--steel-700), var(--steel-800));
+  box-shadow:
+    inset 0 1px 0 var(--edge-hi-strong),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.45);
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    transform 60ms ease;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.step:first-child {
+  border-right: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+.step:last-child {
+  border-left: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+.step svg {
+  width: 20px;
+  height: 20px;
+}
+
+.step:hover:not(:disabled) {
+  color: var(--text);
+  background-image:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 55%),
+    linear-gradient(180deg, var(--steel-600), var(--steel-750));
+}
+
+.step:active:not(:disabled) {
+  transform: translateY(1px);
+  color: var(--orange-bright);
+  background-image: linear-gradient(180deg, var(--steel-850), var(--steel-800));
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.step:disabled {
+  color: var(--steel-500);
+  cursor: not-allowed;
+  background-image: linear-gradient(180deg, var(--steel-800), var(--steel-850));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.step:focus-visible {
+  outline-offset: -3px;
+}
+
+.input {
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 0.4rem;
+  text-align: center;
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 1.12rem;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  text-shadow: 0 0 12px rgba(255, 125, 31, 0.22);
+}
+
+.input:focus {
+  outline: none;
+  color: #fff;
+  background: rgba(255, 125, 31, 0.07);
+}
+
+.row:focus-within .stepper {
+  border-color: rgba(255, 125, 31, 0.5);
+}
+
+@media (max-width: 340px) {
+  .stepper {
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+  }
+
+  .name {
+    font-size: 0.94rem;
+  }
+}

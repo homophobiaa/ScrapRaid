@@ -1,0 +1,82 @@
+/* Design tokens — worn steel, warm off-white print and Scrap Mechanic orange. */
+
+:root {
+  color-scheme: dark;
+
+  /* Painted / bare steel */
+  --steel-1000: #0a0b0c;
+  --steel-950: #101114;
+  --steel-900: #16181b;
+  --steel-850: #1b1e22;
+  --steel-800: #212429;
+  --steel-750: #282c31;
+  --steel-700: #31363c;
+  --steel-600: #3d434a;
+  --steel-500: #4e555e;
+  --steel-400: #6b737d;
+
+  /* Stencilled print */
+  --text: #ece3d5;
+  --text-2: #b3aa9c;
+  --text-3: #7e776d;
+
+  /* Accents */
+  --orange: #ff7d1f;
+  --orange-bright: #ffa155;
+  --orange-deep: #b8520c;
+  --yellow: #e0b23a;
+  --olive: #8a9450;
+  --red: #d0402a;
+  --red-bright: #ff6a4d;
+  --green: #7aa83e;
+
+  /* Edges and lighting */
+  --edge-hi: rgba(255, 255, 255, 0.075);
+  --edge-hi-strong: rgba(255, 255, 255, 0.14);
+  --edge-lo: rgba(0, 0, 0, 0.55);
+  --hairline: rgba(255, 255, 255, 0.055);
+
+  /* Type */
+  --font-display: 'Archivo Black', 'Arial Black', 'Helvetica Neue', sans-serif;
+  --font-label: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Rhythm */
+  --gap-1: 0.25rem;
+  --gap-2: 0.5rem;
+  --gap-3: 0.75rem;
+  --gap-4: 1rem;
+  --gap-5: 1.5rem;
+  --gap-6: 2rem;
+  --radius: 3px;
+  --shell-max: 1380px;
+
+  /* Default tier accent; overridden per raid level. */
+  --tier-accent: var(--steel-400);
+  --tier-accent-dim: rgba(107, 115, 125, 0.25);
+}
+
+/* Raid level drives the accent colour of the whole result panel. */
+[data-level='0'] {
+  --tier-accent: #8c8578;
+  --tier-accent-dim: rgba(140, 133, 120, 0.2);
+}
+[data-level='1'],
+[data-level='2'] {
+  --tier-accent: var(--olive);
+  --tier-accent-dim: rgba(138, 148, 80, 0.22);
+}
+[data-level='3'],
+[data-level='4'] {
+  --tier-accent: var(--yellow);
+  --tier-accent-dim: rgba(224, 178, 58, 0.22);
+}
+[data-level='5'],
+[data-level='6'] {
+  --tier-accent: var(--orange);
+  --tier-accent-dim: rgba(255, 125, 31, 0.22);
+}
+[data-level='7'] {
+  --tier-accent: var(--red-bright);
+  --tier-accent-dim: rgba(255, 106, 77, 0.24);
+}
