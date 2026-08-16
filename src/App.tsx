@@ -1,4 +1,5 @@
 import { useMemo, useRef } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { AppHeader } from './components/AppHeader';
 import { AppFooter } from './components/AppFooter';
 import { CropConsole } from './components/CropConsole';
@@ -61,6 +62,8 @@ export default function App() {
         hidden={readoutOnScreen}
         onJumpToForecast={jumpToForecast}
       />
+
+      <Analytics />
     </div>
   );
 }
